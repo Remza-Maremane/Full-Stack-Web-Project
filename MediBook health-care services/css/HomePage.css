@@ -1,0 +1,354 @@
+/* ================== Global Styles ================== */
+body {
+  font-family: "QuickSand", sans-serif; /* Consistent modern font */
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  color: #1a2526; /* Dark text for contrast on light background */
+  line-height: 1.8;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+html {
+  scroll-behavior: smooth; /* Enables smooth anchor link scrolling */
+}
+
+/* ================== Header ================== */
+header {
+  background: #1a2526; /* Dark background for header */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Soft shadow under header */
+  position: sticky;
+  top: 0; /* Makes the header stick to the top when scrolling */
+  z-index: 1000; /* Ensures header stays above other content */
+}
+
+h1 {
+  font-size: 32px;
+  color: #d4af37; /* Gold color matching logo theme */
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+/* ================== Navigation ================== */
+nav {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.nav-center {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.nav-center a {
+  position: relative;
+  margin: 0 30px;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+/* Underline effect on hover */
+.nav-center a::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #d4af37;
+  transition: width 0.4s ease;
+}
+
+.nav-center a:hover::after {
+  width: 100%;
+}
+
+.nav-center a:hover {
+  color: #d4af37;
+}
+
+/* ================== Authentication Links (Login/Signup) ================== */
+.auth-links a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Sign Up/Log In buttons */
+.signup {
+  background-color: #d4af37;
+  color: #1a2526;
+}
+
+.signup:hover {
+  background-color: #b8972e;
+  color: #ffffff;
+}
+
+/* ================== Main Section ================== */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(
+      180deg,
+      rgba(26, 37, 38, 0.9),
+      rgba(26, 37, 38, 0.7)
+    ),
+    url(../images/download.jpeg); /* Background image */
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+}
+
+.content {
+  text-align: center;
+  padding: 40px;
+  max-width: 600px;
+}
+
+.logo {
+  max-width: 200px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 30px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  transition: transform 0.4s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1); /* Logo grows slightly on hover */
+}
+
+h2 {
+  font-size: 36px;
+  font-weight: 400;
+  color: #ffffff;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+/* Learn More Button */
+.learn-more {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 500;
+  display: inline-block;
+  padding: 12px 30px;
+  border: 2px solid #d4af37;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.learn-more:hover {
+  background-color: #d4af37;
+  color: #1a2526;
+  transform: translateY(-3px);
+}
+
+/* ================== Services Section ================== */
+.services {
+  padding: 80px 80px;
+  background-color: #ffffff;
+  text-align: center;
+  min-width: 100%;
+  scroll-snap-align: start;
+  box-sizing: border-box;
+}
+
+.services h2 {
+  font-size: 40px;
+  color: #1a2526;
+  font-weight: 700;
+  margin-bottom: 50px;
+  letter-spacing: 1.2px;
+}
+
+/* Services Grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.service-card {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.service-card h3 {
+  font-size: 22px;
+  color: #1a2526;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.service-card p {
+  font-size: 16px;
+  color: #4a5859;
+  line-height: 1.6;
+}
+
+.service-card i {
+  font-size: 40px;
+  color: #d4af37;
+  margin-bottom: 20px;
+}
+
+/* ================== Learn More Section ================== */
+.learn-more-section {
+  background: linear-gradient(135deg, #e9ecef 0%, #ffffff 100%);
+  padding: 80px 80px;
+}
+
+.learn-more-section h2 {
+  font-size: 40px;
+  color: #1a2526;
+  font-weight: 700;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+/* Info Cards Grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.info-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  min-height: 400px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.info-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin: 20px auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.info-card h3 {
+  font-size: 26px;
+  color: #1a2526;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.info-card p {
+  font-size: 16px;
+  color: #4a5859;
+  line-height: 1.6;
+}
+
+/* ================== Scrollable Horizontal Container ================== */
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 2rem 0;
+}
+
+/* ================== Footer ================== */
+footer {
+  background: #1a2526;
+  color: #ffffff;
+  padding: 60px 80px 20px;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.contact-info h4,
+.social-links h4 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #d4af37;
+}
+
+.contact-info p {
+  margin: 8px 0;
+  font-size: 20px;
+  color: #e0e0e0;
+}
+
+/* Social Media Icons */
+.social-links a {
+  color: #ffffff;
+  margin-right: 20px;
+  font-size: 30px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #d4af37;
+  transform: translateY(-3px);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 14px;
+  color: #e0e0e0;
+  margin-top: 40px;
+}
+
+.footer-logo {
+  text-align: center;
+  margin: 30px 0 20px;
+}
+
+.footer-logo img {
+  max-width: 180px;
+  height: auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
