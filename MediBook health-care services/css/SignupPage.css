@@ -350,3 +350,21 @@ footer a:hover {
     margin: 0 10px;
   }
 }
+/* Messages */
+.error {
+  color: #d9534f;
+  background-color: #f2dede;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ebccd1;
+  border-radius: 4px;
+}
+
+.success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #d6e9c6;
+  border-radius: 4px;
+}
