@@ -1,3 +1,53 @@
+<?php
+include '../config.php';
+// Check if the connection is established
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+$error = '';
+$success = '';
+
+// Handle Registration
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
+$fullname = $_POST['fullName'];
+$surname=$_POST['surname'];
+$idNumber=$_POST['idNumber'];
+$gender=$_POST['gender'];
+$dataOfBirth=$_POST['dob'];
+$email = $_POST['email'];
+$phone= $_POST['phone'];
+$password = $_POST['password'];
+$confirm_password = $_POST['confirmPassword'];
+
+
+ if ($password !== $confirm_password) {
+    $error = "Passwords do not match";
+  }else {
+    $check_sql = "SELECT * FROM patients WHERE id_number = ? OR Email = ?";
+    $check_stmt = mysqli_prepare($conn, $check_sql);
+    mysqli_stmt_bind_param($check_stmt, "ss", $idNumber, $email);
+    mysqli_stmt_execute($check_stmt);
+    $check_result = mysqli_stmt_get_result($check_stmt);
+
+    if (mysqli_num_rows($check_result) > 0) {
+        $error = "ID  or email already exists";
+    } else {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $insert_sql = "INSERT INTO patients (Name,Surname,id_number,gender, Email,phone_number, password) VALUES (?, ?, ?, ?, ?,?,?)";
+        $insert_stmt = mysqli_prepare($conn, $insert_sql);
+        mysqli_stmt_bind_param($insert_stmt, "sssssss", $fullname, $surname, $idNumber, $gender, $email, $phone, $hashed_password);
+        if (mysqli_stmt_execute($insert_stmt)) {
+            $success = "Registration successful. You can now log in.";
+        } else {
+            $error = "Registration failed. Please try again.";
+        }
+    }
+}
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -35,8 +85,11 @@
         />
         <h2>Sign Up</h2>
         <p>Create your MediBook account to access healthcare services</p>
-
-        <form method="POST" action="process_signup.php" id="signupForm">
+          <?php
+          if (!empty($error)) echo "<p class='error'>$error</p>";
+          if (!empty($success)) echo "<p class='success'>$success</p>";
+          ?>
+        <form method="POST" action=" " id="signupForm">
           <div class="inputBox">
             <label for="fullName">Full Name</label>
             <input
@@ -49,7 +102,48 @@
             <span>Full Name</span>
           </div>
 
-          <div class="inputBox">
+            <div class="inputBox">
+                <label for="surname">Surname</label>
+                <input
+                        type="text"
+                        id="surname"
+                        name="surname"
+                        placeholder="Enter your surname"
+                        required
+                />
+                <span>Surname</span>
+            </div>
+
+            <div class="inputBox">
+                <label for="idNumber">ID Number</label>
+                <input
+                        type="text"
+                        id="idNumber"
+                        name="idNumber"
+                        placeholder="Enter your ID Number"
+                        required
+                />
+                <span>ID Number</span>
+            </div>
+
+            <div class="inputBox">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                <span>Gender</span>
+            </div>
+
+            <div class="inputBox">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob" required />
+                <span>Date of Birth</span>
+            </div>
+
+            <div class="inputBox">
             <label for="email">Email</label>
             <input
               type="email"
@@ -60,6 +154,22 @@
             />
             <span>Email</span>
           </div>
+
+
+            <div class="inputBox">
+                <label for="phone">Phone Number</label>
+                <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                        pattern="[0-9]{10}"
+                        title="Enter a valid 10-digit phone number."
+                        required
+                />
+                <span>Phone Number</span>
+            </div>
+
 
           <div class="inputBox">
             <label for="password">Password</label>
@@ -87,51 +197,9 @@
             <span>Confirm Password</span>
           </div>
 
-          <div class="inputBox">
-            <label for="dob">Date of Birth</label>
-            <input type="date" id="dob" name="dob" required />
-            <span>Date of Birth</span>
-          </div>
 
           <div class="inputBox">
-            <label for="gender">Gender</label>
-            <select id="gender" name="gender" required>
-              <option value="" disabled selected>Select your gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-            <span>Gender</span>
-          </div>
-
-          <div class="inputBox">
-            <label for="phone">Phone Number</label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              placeholder="Enter your phone number"
-              pattern="[0-9]{10}"
-              title="Enter a valid 10-digit phone number."
-              required
-            />
-            <span>Phone Number</span>
-          </div>
-
-          <div class="inputBox">
-            <label for="idNumber">ID Number</label>
-            <input
-              type="text"
-              id="idNumber"
-              name="idNumber"
-              placeholder="Enter your ID Number"
-              required
-            />
-            <span>ID Number</span>
-          </div>
-
-          <div class="inputBox">
-            <button type="submit" class="submit-btn">Create Account</button>
+            <button type="submit" name="register" class="submit-btn">Create Account</button>
           </div>
 
           <p class="trouble-signup">
