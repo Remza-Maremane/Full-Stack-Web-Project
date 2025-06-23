@@ -1,3 +1,43 @@
+<?php
+session_start();
+include '../config.php';
+
+// Check if the connection is established
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$error = '';
+$success = '';
+
+// Handle Login
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
+$email = $_POST['email'];
+$password = $_POST['password'];
+
+$sql = "SELECT Name, Email, password FROM patients WHERE Email = ?";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, "s", $email);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($result)) {
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['Name'] = $row['Name'];
+            $_SESSION['email'] = $row['Email'];
+            header("Location:../patient/MediBook%20UserPage.php");
+            exit();
+        } else {
+            $error = "Invalid username or password";
+        }
+    } else {
+        $error = "Invalid username or password";
+    }
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -35,6 +75,10 @@
         </div>
       </header>
 
+        <?php
+        if (!empty($error)) echo "<p class='error'>$error</p>";
+        if (!empty($success)) echo "<p class='success'>$success</p>";
+        ?>
       <!-- Login Form -->
       <div class="login-form">
         <img
@@ -46,7 +90,7 @@
         <p>Enter your credentials to access MediBook</p>
 
         <!-- FORM START: sends data to login.php using POST method -->
-        <form method="POST" action="login.php">
+        <form method="POST" action=" ">
           <!-- Email input -->
           <div class="inputBox">
             <label for="email" class="sr-only">Email</label>
@@ -75,7 +119,7 @@
 
           <!-- Submit Button -->
           <div class="inputBox">
-            <button type="submit" class="submit-btn">Sign In</button>
+            <button type="submit" name="login" class="submit-btn">Sign In</button>
           </div>
 
           <!-- Trouble signing in -->
