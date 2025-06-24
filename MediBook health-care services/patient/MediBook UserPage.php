@@ -1,3 +1,46 @@
+<?php
+session_start();
+include '../config.php';
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$error = '';
+$success = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST'&& isset($_POST['book'])) {
+
+$name=$_POST['name'];
+$idNumber=$_POST['idNumber'];
+$clinic=$_POST['clinic'];
+$service=$_POST['serviceType'];
+$date=$_POST['appointmentDate'];
+$time=$_POST['timeSlot'];
+
+    $sql = "INSERT INTO bookings (Name, Id_number, Time_Slot, date, Clinic_Name, Service) VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = mysqli_prepare($conn, $sql);
+
+    if (!$stmt) {
+        $error = "Prepare failed: " . mysqli_error($conn);
+    } else {
+        mysqli_stmt_bind_param($stmt, "ssssss", $name, $idNumber, $time, $date, $clinic, $service);
+
+        if (mysqli_stmt_execute($stmt)) {
+            $affected_rows = mysqli_stmt_affected_rows($stmt);
+            if ($affected_rows > 0) {
+                $success = "Booked successfully! ($affected_rows row inserted)";
+            } else {
+                $error = "No rows were inserted - check your data.";
+            }
+        } else {
+            $error = "Execute failed: " . mysqli_stmt_error($stmt);
+        }
+        mysqli_stmt_close($stmt);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -69,12 +112,26 @@
             id="appointmentFormContainer"
             style="display: none"
           >
+              <?php
+              if (!empty($error)) {
+                  echo "<p class='error'>$error</p>";
+              }
+              if (!empty($success)) {
+                  echo "<p class='success'>$success</p>";
+              }
+              ?>
             <h2>Book an Appointment</h2>
-            <form
-              id="appointmentForm"
-              action="/api/book-appointment"
-              method="POST"
-            >
+            <form id="appointmentForm" action=" " method="POST">
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            required
+                    />
+                </div>
               <div class="form-group">
                 <label for="idNumber">ID Number (13 digits)</label>
                 <input
@@ -129,7 +186,7 @@
                   <option value="" disabled selected>Select a time slot</option>
                 </select>
               </div>
-              <button type="submit" class="book-btn">Submit Appointment</button>
+              <button type="submit" name="book" class="book-btn">Submit Appointment</button>
               <button
                 type="button"
                 class="cancel-btn"
