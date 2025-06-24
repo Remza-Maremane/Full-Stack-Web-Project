@@ -75,31 +75,3 @@ const form = document.getElementById("appointmentForm");
 const idNumberInput = document.getElementById("idNumber");
 const idNumberError = document.getElementById("idNumberError");
 const dateError = document.getElementById("dateError");
-
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    let isValid = true;
-
-    // Validate ID Number
-    if (!/^\d{13}$/.test(idNumberInput.value)) {
-        idNumberError.style.display = "block";
-        isValid = false;
-    } else {
-        idNumberError.style.display = "none";
-    }
-
-    // Validate Date
-    const selectedDate = new Date(dateInput.value);
-    if (selectedDate <= new Date()) {
-        dateError.style.display = "block";
-        isValid = false;
-    } else {
-        dateError.style.display = "none";
-    }
-
-    if (isValid) {
-        console.log("Form Data:", new FormData(form));
-        alert("Appointment booked successfully!");
-        hideAppointmentForm();
-    }
-});
