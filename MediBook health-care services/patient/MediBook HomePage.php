@@ -36,8 +36,8 @@
         <!-- Authentication Links: PHP Ready -->
         <div class="auth-links">
           <!-- Future: Replace href with PHP backend routing if needed -->
-          <a href="../MediBook%20LoginPage.php" class="signup">Login</a>
-          <a href="../MediBook%20SignupPage.php" class="signup">Sign up</a>
+          <a href="../patient/MediBook%20LoginPage.php" class="signup">Login</a>
+          <a href="../patient/MediBook%20SignupPage.php" class="signup">Sign up</a>
         </div>
       </nav>
     </header>

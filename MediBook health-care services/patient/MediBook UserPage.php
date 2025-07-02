@@ -9,22 +9,35 @@ if (!$conn) {
 $error = '';
 $success = '';
 
+// Fetch user info from session email
+$user = null;
+if (isset($_SESSION['email'])) {
+    $email = $_SESSION['email'];
+    $user_sql = "SELECT Name, id_number FROM patients WHERE Email = ?";
+    $user_stmt = mysqli_prepare($conn, $user_sql);
+    mysqli_stmt_bind_param($user_stmt, "s", $email);
+    mysqli_stmt_execute($user_stmt);
+    $user_result = mysqli_stmt_get_result($user_stmt);
+    $user = mysqli_fetch_assoc($user_result);
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST'&& isset($_POST['book'])) {
+    // Use session user info
+    $name = $user ? $user['Name'] : '';
+    $idNumber = $user ? $user['id_number'] : '';
+    $clinic = $_POST['clinic'];
+    $service = $_POST['serviceType'];
+    $date = $_POST['appointmentDate'];
+    $time = $_POST['timeSlot'];
+    $symptoms = isset($_POST['symptoms']) ? $_POST['symptoms'] : '';
 
-$name=$_POST['name'];
-$idNumber=$_POST['idNumber'];
-$clinic=$_POST['clinic'];
-$service=$_POST['serviceType'];
-$date=$_POST['appointmentDate'];
-$time=$_POST['timeSlot'];
-
-    $sql = "INSERT INTO bookings (Name, Id_number, Time_Slot, date, Clinic_Name, Service) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO bookings (Name, Id_number, Time_Slot, date, Clinic_Name, Service, Symptoms) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $sql);
 
     if (!$stmt) {
         $error = "Prepare failed: " . mysqli_error($conn);
     } else {
-        mysqli_stmt_bind_param($stmt, "ssssss", $name, $idNumber, $time, $date, $clinic, $service);
+        mysqli_stmt_bind_param($stmt, "sssssss", $name, $idNumber, $time, $date, $clinic, $service, $symptoms);
 
         if (mysqli_stmt_execute($stmt)) {
             $affected_rows = mysqli_stmt_affected_rows($stmt);
@@ -82,10 +95,8 @@ $time=$_POST['timeSlot'];
           <a href="#" class="nav-item"
             ><i class="bx bxs-user bx-tada"></i> Update Personal Information</a
           >
-          <a href="#" class="nav-item"
-            ><i class="bx bx-bot bx-tada"></i> MediBot</a
-          >
-          <a href="#" class="nav-item"
+          <a href="#" class="nav-item"><i class="bx bx-bot bx-tada"></i> MediBot</a>
+          <a href="Appointments.php" class="nav-item"
             ><i class="bx bx-calendar-check bx-burst"></i> View Appointment</a
           >
           <a href="#" class="nav-item"
@@ -122,31 +133,6 @@ $time=$_POST['timeSlot'];
               ?>
             <h2>Book an Appointment</h2>
             <form id="appointmentForm" action=" " method="POST">
-
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            required
-                    />
-                </div>
-              <div class="form-group">
-                <label for="idNumber">ID Number (13 digits)</label>
-                <input
-                  type="text"
-                  id="idNumber"
-                  name="idNumber"
-                  maxlength="13"
-                  pattern="[0-9]{13}"
-                  required
-                  aria-describedby="idNumberError"
-                />
-                <span id="idNumberError" class="error-message"
-                  >Please enter a valid 13-digit ID number.</span
-                >
-              </div>
               <div class="form-group">
                 <label for="clinic">Choose Clinic</label>
                 <select id="clinic" name="clinic" required>
@@ -185,6 +171,10 @@ $time=$_POST['timeSlot'];
                 <select id="timeSlot" name="timeSlot" required>
                   <option value="" disabled selected>Select a time slot</option>
                 </select>
+              </div>
+              <div class="form-group">
+                <label for="symptoms">Symptoms (optional)</label>
+                <textarea id="symptoms" name="symptoms" rows="3" maxlength="255" placeholder="Describe your symptoms (optional)"></textarea>
               </div>
               <button type="submit" name="book" class="book-btn">Submit Appointment</button>
               <button
