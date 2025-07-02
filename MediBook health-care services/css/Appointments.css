@@ -1,0 +1,262 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Quicksand", sans-serif;
+  background: linear-gradient(135deg, rgba(26, 37, 38, 0.9), rgba(26, 37, 38, 0.7)), url(Medecine\ laptop\ wallpaper.jpeg);
+  background-size: cover;
+  background-position: center;
+  color: #1a2526;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.top-header {
+  background: #1a2526;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 120px;
+}
+
+.logo img {
+  height: 60px;
+}
+
+.main-nav {
+  display: flex;
+  gap: 40px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.main-nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+  color: #d4af37;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
+.user-name {
+  color: #d4af37;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logout-btn {
+  background: #ffffff;
+  color: #1a2526;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.logout-btn:hover {
+  background: #ba0c0c;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.main-content {
+  flex: 1;
+  padding: 60px 40px 40px 40px;
+  text-align: center;
+  margin-top: 120px;
+}
+
+.main-content h1 {
+  font-size: 36px;
+  font-weight: 600;
+  color: #b67615;
+  margin-bottom: 30px;
+}
+
+.appointments-table-container {
+  overflow-x: auto;
+  margin: 0 auto;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 30px 20px;
+}
+
+.appointments-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.appointments-table th, .appointments-table td {
+  padding: 16px 12px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 18px;
+}
+
+.appointments-table th {
+  background: #d4af37;
+  color: #fff;
+  font-weight: 700;
+}
+
+.appointments-table tr:last-child td {
+  border-bottom: none;
+}
+
+.appointments-table tr:hover {
+  background: #f7f7e8;
+}
+
+.no-appointments {
+  margin: 60px auto 0 auto;
+  padding: 40px 20px;
+  background: #fff6f6;
+  border-radius: 30px;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(186,12,12,0.08);
+  color: #ba0c0c;
+  font-size: 22px;
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  margin-top: auto;
+  padding: 20px 0;
+  background: #1a2526;
+  color: #4a5859;
+}
+
+footer a {
+  color: #d4af37;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #b8972e;
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    padding: 30px 5px 20px 5px;
+  }
+  .appointments-table-container {
+    padding: 15px 2px;
+  }
+}
+
+@media (max-width: 600px) {
+  .top-header {
+    padding: 10px 5px;
+    height: 80px;
+  }
+  .main-nav {
+    gap: 10px;
+  }
+  .main-content h1 {
+    font-size: 24px;
+  }
+  .appointments-table th, .appointments-table td {
+    font-size: 14px;
+    padding: 8px 4px;
+  }
+  .appointments-table-container {
+    padding: 5px 0;
+  }
+  .no-appointments {
+    font-size: 16px;
+    padding: 20px 5px;
+  }
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #ba0c0c;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+.delete-btn:hover, .delete-btn:focus {
+  background: #ffeaea;
+  color: #fff;
+  outline: none;
+  box-shadow: 0 0 0 2px #ba0c0c33;
+}
+
+.update-btn {
+  background: #b5b518;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 6px;
+  transition: background 0.2s;
+}
+.update-btn:hover, .update-btn:focus {
+  background: #2a981c;
+  color: #fff;
+}
+.update-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+.update-form input[type="date"], .update-form select {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #b8811b;
+}
+.update-form button[type="submit"] {
+  background: #2a981c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.update-form button[type="submit"]:hover {
+  background: #b5b518;
+}

@@ -250,6 +250,27 @@ body {
   border-color: #d4af37;
 }
 
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-family: "Quicksand", sans-serif;
+  border: 1px solid #b8811b;
+  border-radius: 20px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  resize: vertical;
+  min-height: 60px;
+  max-height: 180px;
+  background: #fff;
+  color: #1a2526;
+}
+
+.form-group textarea:focus {
+  border-color: #d4af37;
+  outline: none;
+}
+
 .error-message {
   color: #ba0c0c;
   font-size: 14px;
