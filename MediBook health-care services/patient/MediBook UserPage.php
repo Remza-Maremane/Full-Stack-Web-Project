@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'&& isset($_POST['book'])) {
       </header>
       <div class="content">
         <nav class="side-nav" id="sideNav" aria-expanded="false">
-          <a href="#" class="nav-item"
+          <a href="Information.php" class="nav-item"
             ><i class="bx bxs-user bx-tada"></i> Update Personal Information</a
           >
           <a href="#" class="nav-item"><i class="bx bx-bot bx-tada"></i> MediBot</a>
