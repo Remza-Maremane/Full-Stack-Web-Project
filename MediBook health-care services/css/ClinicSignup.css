@@ -1,0 +1,211 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Quicksand", sans-serif;
+  background: linear-gradient(135deg, rgba(26, 37, 38, 0.9), rgba(26, 37, 38, 0.7)), url('../images/Medecine laptop wallpaper.jpeg');
+  background-size: cover;
+  background-position: center;
+  color: #1a2526;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.top-header {
+  background: #1a2526;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.logo img {
+  height: 60px;
+}
+
+.back-button { display: none; }
+
+.signup-form {
+  background: rgba(255, 255, 255, 0.97);
+  max-width: 420px;
+  margin: 140px auto 0 auto;
+  padding: 40px 30px 30px 30px;
+  border-radius: 25px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  text-align: center;
+  position: relative;
+}
+
+.secondary-logo {
+  width: 70px;
+  margin-bottom: 10px;
+}
+
+.signup-form h2 {
+  color: #1a2526;
+  margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.signup-form p {
+  color: #4a5859;
+  margin-bottom: 18px;
+  font-size: 1rem;
+}
+
+.inputBox {
+  position: relative;
+  margin: 20px 0;
+}
+
+.inputBox input[type="text"],
+.inputBox input[type="email"],
+.inputBox input[type="password"],
+.inputBox select {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 2px solid #4a5859;
+  background: transparent;
+  font-size: 16px;
+  color: #1a2526;
+  font-family: "Playfair Display", serif;
+  transition: all 0.3s ease;
+}
+
+.inputBox input:focus,
+.inputBox select:focus {
+  outline: none;
+  border-bottom: 2px solid #d4af37;
+  transform: scale(1.02);
+}
+
+.inputBox span {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #4a5859;
+  font-size: 14px;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.inputBox input:focus + span,
+.inputBox input:not(:placeholder-shown) + span,
+.inputBox select:focus + span,
+.inputBox select:not([value=""]) + span {
+  top: -12px;
+  font-size: 12px;
+  color: #d4af37;
+}
+
+.inputBox input::placeholder,
+.inputBox select option[disabled] {
+  color: transparent;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+  margin-top: 10px;
+}
+
+.checkbox-group label {
+  font-size: 1rem;
+  color: #1a2526;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  accent-color: #d4af37;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+}
+
+button[type="submit"] {
+  background: #2a981c;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+button[type="submit"]:hover {
+  background: #218013;
+  transform: translateY(-2px);
+}
+
+.error {
+  color: #ba0c0c;
+  background: #d73333;
+  border-radius: 8px;
+  padding: 8px 0;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.success {
+  color: #30ec18;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 8px 0;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .top-header {
+    padding: 10px 0;
+    height: 80px;
+  }
+  .signup-form {
+    padding: 20px 8px 18px 8px;
+    max-width: 98vw;
+    margin-top: 90px;
+  }
+  .logo img {
+    height: 40px;
+  }
+  .secondary-logo {
+    width: 45px;
+  }
+  .signup-form h2 {
+    font-size: 1.3rem;
+  }
+} 
