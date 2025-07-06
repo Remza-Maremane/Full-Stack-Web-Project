@@ -11,33 +11,52 @@ $success = '';
 
 // Fetch user info from session email
 $user = null;
+$patient_city = '';
 if (isset($_SESSION['email'])) {
     $email = $_SESSION['email'];
-    $user_sql = "SELECT Name, id_number FROM patients WHERE Email = ?";
+    $user_sql = "SELECT Name,Surname, id_number,phone_number, city FROM patients WHERE Email = ?";
     $user_stmt = mysqli_prepare($conn, $user_sql);
     mysqli_stmt_bind_param($user_stmt, "s", $email);
     mysqli_stmt_execute($user_stmt);
     $user_result = mysqli_stmt_get_result($user_stmt);
     $user = mysqli_fetch_assoc($user_result);
+    if ($user && isset($user['city'])) {
+        $patient_city = $user['city'];
+    }
+}
+
+// Fetch clinics in the same city as the patient
+$clinics_in_city = [];
+if ($patient_city) {
+    $clinic_sql = "SELECT name FROM clinics WHERE city = ?";
+    $clinic_stmt = mysqli_prepare($conn, $clinic_sql);
+    mysqli_stmt_bind_param($clinic_stmt, "s", $patient_city);
+    mysqli_stmt_execute($clinic_stmt);
+    $clinic_result = mysqli_stmt_get_result($clinic_stmt);
+    while ($row = mysqli_fetch_assoc($clinic_result)) {
+        $clinics_in_city[] = $row['name'];
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'&& isset($_POST['book'])) {
     // Use session user info
     $name = $user ? $user['Name'] : '';
+    $surname = $user ? $user['Surname'] : '';
     $idNumber = $user ? $user['id_number'] : '';
+    $phone_number = $user ? $user['phone_number'] : '';
     $clinic = $_POST['clinic'];
     $service = $_POST['serviceType'];
     $date = $_POST['appointmentDate'];
     $time = $_POST['timeSlot'];
     $symptoms = isset($_POST['symptoms']) ? $_POST['symptoms'] : '';
 
-    $sql = "INSERT INTO bookings (Name, Id_number, Time_Slot, date, Clinic_Name, Service, Symptoms) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO bookings (Name, Surname, Id_number, phone_number, Time_Slot, date, Clinic_Name, Service, Symptoms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $sql);
 
     if (!$stmt) {
         $error = "Prepare failed: " . mysqli_error($conn);
     } else {
-        mysqli_stmt_bind_param($stmt, "sssssss", $name, $idNumber, $time, $date, $clinic, $service, $symptoms);
+        mysqli_stmt_bind_param($stmt, "sssssssss", $name, $surname, $idNumber, $phone_number, $time, $date, $clinic, $service, $symptoms);
 
         if (mysqli_stmt_execute($stmt)) {
             $affected_rows = mysqli_stmt_affected_rows($stmt);
@@ -137,10 +156,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'&& isset($_POST['book'])) {
                 <label for="clinic">Choose Clinic</label>
                 <select id="clinic" name="clinic" required>
                   <option value="" disabled selected>Select a clinic</option>
-                  <option value="city-health">City Health Clinic</option>
-                  <option value="medicare">MediCare Center</option>
-                  <option value="sunrise">Sunrise Medical Hub</option>
-                  <option value="hope">Hope Wellness Clinic</option>
+                  <?php if (!empty($clinics_in_city)) {
+                    foreach ($clinics_in_city as $clinic_name) {
+                        echo '<option value="' . htmlspecialchars($clinic_name) . '">' . htmlspecialchars($clinic_name) . '</option>';
+                    }
+                  } else { ?>
+                    <option value="">No clinics found in your city</option>
+                  <?php } ?>
                 </select>
               </div>
               <div class="form-group">

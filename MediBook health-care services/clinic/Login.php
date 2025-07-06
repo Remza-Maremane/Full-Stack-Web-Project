@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
             if (password_verify($password, $hashed_password)) {
                 $_SESSION['clinicID'] = $clinicID;
                 $_SESSION['clinic_name'] = $name;
-                header('Location: Dashboard.php'); // Change to your clinic dashboard
+                header('Location: home.php');
                 exit();
             } else {
                 $error = 'Invalid name or password.';
