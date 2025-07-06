@@ -17,6 +17,7 @@ $gender=$_POST['gender'];
 $dataOfBirth=$_POST['dob'];
 $email = $_POST['email'];
 $phone= $_POST['phone'];
+$city = $_POST['city'];
 $password = $_POST['password'];
 $confirm_password = $_POST['confirmPassword'];
 
@@ -34,9 +35,9 @@ $confirm_password = $_POST['confirmPassword'];
         $error = "ID  or email already exists";
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $insert_sql = "INSERT INTO patients (Name,Surname,id_number,gender, Email,phone_number, password) VALUES (?, ?, ?, ?, ?,?,?)";
+        $insert_sql = "INSERT INTO patients (Name,Surname,id_number,gender,city, Email,phone_number, password) VALUES (?, ?, ?, ?, ?,?,?,?)";
         $insert_stmt = mysqli_prepare($conn, $insert_sql);
-        mysqli_stmt_bind_param($insert_stmt, "sssssss", $fullname, $surname, $idNumber, $gender, $email, $phone, $hashed_password);
+        mysqli_stmt_bind_param($insert_stmt, "ssssssss", $fullname, $surname, $idNumber, $gender, $city, $email, $phone, $hashed_password);
         if (mysqli_stmt_execute($insert_stmt)) {
             $success = "Registration successful. You can now log in.";
         } else {
@@ -170,6 +171,11 @@ $confirm_password = $_POST['confirmPassword'];
                 <span>Phone Number</span>
             </div>
 
+            <div class="inputBox">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" placeholder="Enter your city" required />
+                <span>City</span>
+            </div>
 
           <div class="inputBox">
             <label for="password">Password</label>

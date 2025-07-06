@@ -29,17 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $gender = $_POST['gender'];
     $email = $_POST['Email'];
     $phone_number = $_POST['phone_number'];
+    $city = $_POST['city'];
     $password = $_POST['Password'];
 
     if (!empty($password)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "UPDATE patients SET Name=?, Surname=?, Id_number=?, gender=?, Email=?, phone_number=?, Password=? WHERE Email=?";
+        $sql = "UPDATE patients SET Name=?, Surname=?, Id_number=?, gender=?, Email=?, phone_number=?, city=?, Password=? WHERE Email=?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssssssss', $name, $surname, $id_number, $gender, $email, $phone_number, $hashed_password, $email_session);
+        $stmt->bind_param('sssssssss', $name, $surname, $id_number, $gender, $email, $phone_number, $city, $hashed_password, $email_session);
     } else {
-        $sql = "UPDATE patients SET Name=?, Surname=?, Id_number=?, gender=?, Email=?, phone_number=? WHERE Email=?";
+        $sql = "UPDATE patients SET Name=?, Surname=?, Id_number=?, gender=?, Email=?, phone_number=?, city=? WHERE Email=?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('sssssss', $name, $surname, $id_number, $gender, $email, $phone_number, $email_session);
+        $stmt->bind_param('ssssssss', $name, $surname, $id_number, $gender, $email, $phone_number, $city, $email_session);
     }
 
     if ($stmt->execute()) {
@@ -56,11 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Fetch current patient info
-$sql = "SELECT Name, Surname, Id_number, gender, Email, phone_number FROM patients WHERE Email=?";
+$sql = "SELECT Name, Surname, Id_number, gender, Email, phone_number, city FROM patients WHERE Email=?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('s', $email_session);
 $stmt->execute();
-$stmt->bind_result($name, $surname, $id_number, $gender, $email, $phone_number);
+$stmt->bind_result($name, $surname, $id_number, $gender, $email, $phone_number, $city);
 $stmt->fetch();
 $stmt->close();
 ?>
@@ -108,6 +109,7 @@ $stmt->close();
                     </label>
                     <label>Email:<input type="email" name="Email" value="<?php echo htmlspecialchars($email); ?>" required></label>
                     <label>Phone Number:<input type="text" name="phone_number" value="<?php echo htmlspecialchars($phone_number); ?>" required></label>
+                    <label>City:<input type="text" name="city" value="<?php echo htmlspecialchars($city); ?>" required></label>
                     <label>Password (leave blank to keep current):<input type="password" name="Password"></label>
                     <button type="submit">Update Information</button>
                 </form>
