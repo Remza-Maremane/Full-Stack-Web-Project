@@ -101,7 +101,7 @@ $clinicName = $_SESSION['clinic_name'];
                 </div>
 
                 <!-- Clinic Profile -->
-                <div class="service-card">
+                <div class="service-card" onclick="window.location.href='Information.php'" style="cursor:pointer;">
                     <i class="bx bxs-building bx-spin"></i>
                     <h3>Clinic Profile</h3>
                     <p>Update clinic information, location details, and contact information.</p>

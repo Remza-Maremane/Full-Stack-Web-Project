@@ -1,0 +1,229 @@
+body {
+  font-family: 'Quicksand', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  color: #1a2526;
+  min-height: 100vh;
+}
+
+header.top-header {
+  background: #1a2526;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 120px;
+}
+
+.logo img {
+  height: 60px;
+}
+
+.main-nav {
+  display: flex;
+  gap: 40px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.main-nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+  color: #d4af37;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
+.user-name {
+  color: #d4af37;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logout-btn {
+  background: #ffffff;
+  color: #1a2526;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.logout-btn:hover {
+  background: #ba0c0c;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.main-content {
+  flex: 1;
+  padding: 60px 40px 40px 40px;
+  text-align: center;
+  margin-top: 120px;
+}
+
+footer {
+  text-align: center;
+  padding: 24px 0 12px 0;
+  color: #fff;
+  background: #1a2526;
+  font-size: 1rem;
+  border-top: 2px solid #b67615;
+  box-shadow: 0 -2px 8px rgba(26,37,38,0.08);
+  margin-top: 40px;
+}
+footer a {
+  color: #b67615;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+footer a:hover {
+  color: #fff;
+}
+
+/* Container for the form */
+.info-container {
+  max-width: 500px;
+  margin: 100px auto 40px auto;
+  background: rgba(255,255,255,0.98);
+  padding: 40px 32px 32px 32px;
+  border-radius: 28px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 2px;
+  text-align: left;
+}
+
+.info-form input[type="text"] {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1.5px solid #b67615;
+  font-size: 1.08rem;
+  background: #f8f9fa;
+  transition: border 0.2s;
+}
+
+.info-form input[type="text"]:focus {
+  border: 1.5px solid #1a2526;
+  outline: none;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.checkbox-group label {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 10px;
+  accent-color: #b67615;
+  width: 18px;
+  height: 18px;
+}
+
+.update-btn {
+  background: #1a2526;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 0;
+  font-size: 1.13rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px rgba(26,37,38,0.08);
+}
+
+.update-btn:hover {
+  background: #b67615;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.message {
+  color: #218013;
+  background: #e6ffe6;
+  border-radius: 8px;
+  padding: 10px 0;
+  margin-bottom: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .info-container {
+    max-width: 98vw;
+    padding: 18px 4vw 18px 4vw;
+    margin-top: 70px;
+  }
+  .info-form input[type="text"] {
+    font-size: 1rem;
+    padding: 10px;
+  }
+  .update-btn {
+    font-size: 1rem;
+    padding: 12px 0;
+  }
+  header.top-header {
+    padding: 10px 0;
+    height: 80px;
+  }
+} 
