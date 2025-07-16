@@ -37,37 +37,37 @@ tomorrow.setDate(tomorrow.getDate() + 1);
 dateInput.min = tomorrow.toISOString().split("T")[0];
 
 // Populate time slots based on date
+const clinicSelect = document.getElementById("clinic");
 const timeSlotSelect = document.getElementById("timeSlot");
+
 function updateTimeSlots() {
-    const selectedDate = new Date(dateInput.value);
+    const clinic = clinicSelect.value;
+    const date = dateInput.value;
     timeSlotSelect.innerHTML =
         '<option value="" disabled selected>Select a time slot</option>';
-    if (!dateInput.value) return;
+    if (!clinic || !date) return;
 
-    const isWeekend =
-        selectedDate.getDay() === 0 || selectedDate.getDay() === 6;
-    const slots = isWeekend
-        ? ["10:00", "12:00", "14:00"]
-        : [
-            "08:00",
-            "09:00",
-            "10:00",
-            "11:00",
-            "12:00",
-            "13:00",
-            "14:00",
-            "15:00",
-            "16:00",
-        ];
-
-    slots.forEach((slot) => {
-        const option = document.createElement("option");
-        option.value = slot;
-        option.textContent = slot;
-        timeSlotSelect.appendChild(option);
-    });
+    fetch(`../patient/get_available_slots.php?clinic=${encodeURIComponent(clinic)}&date=${encodeURIComponent(date)}`)
+        .then(response => response.json())
+        .then(slots => {
+            if (slots.length === 0) {
+                const option = document.createElement("option");
+                option.value = "";
+                option.textContent = "No available slots";
+                option.disabled = true;
+                timeSlotSelect.appendChild(option);
+            } else {
+                slots.forEach(slot => {
+                    const option = document.createElement("option");
+                    option.value = slot;
+                    option.textContent = slot;
+                    timeSlotSelect.appendChild(option);
+                });
+            }
+        });
 }
 
+clinicSelect.addEventListener("change", updateTimeSlots);
 dateInput.addEventListener("change", updateTimeSlots);
 
 // Form validation

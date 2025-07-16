@@ -50,25 +50,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'&& isset($_POST['book'])) {
     $time = $_POST['timeSlot'];
     $symptoms = isset($_POST['symptoms']) ? $_POST['symptoms'] : '';
 
-    $sql = "INSERT INTO bookings (Name, Surname, Id_number, phone_number, Time_Slot, date, Clinic_Name, Service, Symptoms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = mysqli_prepare($conn, $sql);
+    // Server-side check for slot availability
+    $check_sql = "SELECT COUNT(*) as count FROM bookings WHERE Clinic_Name = ? AND date = ? AND Time_Slot = ?";
+    $check_stmt = mysqli_prepare($conn, $check_sql);
+    mysqli_stmt_bind_param($check_stmt, "sss", $clinic, $date, $time);
+    mysqli_stmt_execute($check_stmt);
+    $check_result = mysqli_stmt_get_result($check_stmt);
+    $check_row = mysqli_fetch_assoc($check_result);
+    mysqli_stmt_close($check_stmt);
 
-    if (!$stmt) {
-        $error = "Prepare failed: " . mysqli_error($conn);
+    if ($check_row['count'] >= 3) {
+        $error = "Sorry, this time slot is fully booked at this clinic. Please choose another time.";
     } else {
-        mysqli_stmt_bind_param($stmt, "sssssssss", $name, $surname, $idNumber, $phone_number, $time, $date, $clinic, $service, $symptoms);
+        $sql = "INSERT INTO bookings (Name, Surname, Id_number, phone_number, Time_Slot, date, Clinic_Name, Service, Symptoms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $sql);
 
-        if (mysqli_stmt_execute($stmt)) {
-            $affected_rows = mysqli_stmt_affected_rows($stmt);
-            if ($affected_rows > 0) {
-                $success = "Booked successfully! ($affected_rows row inserted)";
-            } else {
-                $error = "No rows were inserted - check your data.";
-            }
+        if (!$stmt) {
+            $error = "Prepare failed: " . mysqli_error($conn);
         } else {
-            $error = "Execute failed: " . mysqli_stmt_error($stmt);
+            mysqli_stmt_bind_param($stmt, "sssssssss", $name, $surname, $idNumber, $phone_number, $time, $date, $clinic, $service, $symptoms);
+
+            if (mysqli_stmt_execute($stmt)) {
+                $affected_rows = mysqli_stmt_affected_rows($stmt);
+                if ($affected_rows > 0) {
+                    $success = "Booked successfully! ($affected_rows row inserted)";
+                } else {
+                    $error = "No rows were inserted - check your data.";
+                }
+            } else {
+                $error = "Execute failed: " . mysqli_stmt_error($stmt);
+            }
+            mysqli_stmt_close($stmt);
         }
-        mysqli_stmt_close($stmt);
     }
 }
 ?>
