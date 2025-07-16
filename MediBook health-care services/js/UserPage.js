@@ -39,6 +39,7 @@ dateInput.min = tomorrow.toISOString().split("T")[0];
 // Populate time slots based on date
 const clinicSelect = document.getElementById("clinic");
 const timeSlotSelect = document.getElementById("timeSlot");
+const serviceTypeSelect = document.getElementById("serviceType");
 
 function updateTimeSlots() {
     const clinic = clinicSelect.value;
@@ -67,7 +68,34 @@ function updateTimeSlots() {
         });
 }
 
-clinicSelect.addEventListener("change", updateTimeSlots);
+function updateServiceTypes() {
+    const clinic = clinicSelect.value;
+    serviceTypeSelect.innerHTML = '<option value="" disabled selected>Select a service</option>';
+    if (!clinic) return;
+    fetch(`../patient/get_clinic_services.php?clinic=${encodeURIComponent(clinic)}`)
+        .then(response => response.json())
+        .then(services => {
+            if (services.length === 0) {
+                const option = document.createElement("option");
+                option.value = "";
+                option.textContent = "No services available";
+                option.disabled = true;
+                serviceTypeSelect.appendChild(option);
+            } else {
+                services.forEach(service => {
+                    const option = document.createElement("option");
+                    option.value = service;
+                    option.textContent = service;
+                    serviceTypeSelect.appendChild(option);
+                });
+            }
+        });
+}
+
+clinicSelect.addEventListener("change", () => {
+    updateTimeSlots();
+    updateServiceTypes();
+});
 dateInput.addEventListener("change", updateTimeSlots);
 
 // Form validation
