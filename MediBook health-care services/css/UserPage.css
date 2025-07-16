@@ -320,14 +320,28 @@ footer a:hover {
 /* Responsive Design */
 @media (max-width: 768px) {
   .top-header {
-    padding: 15px 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 10px 10px;
   }
   .main-nav {
-    gap: 15px;
+    flex-direction: column;
+    gap: 10px;
+    position: static;
+    transform: none;
+    width: 100%;
+    align-items: flex-start;
+  }
+  .main-nav a {
+    font-size: 16px;
+    padding: 8px 0;
   }
   .user-section {
+    width: 100%;
+    justify-content: flex-end;
+    padding-right: 0;
     gap: 10px;
-    padding-right: 10px;
   }
   .logout-btn {
     padding: 8px 16px;
@@ -344,22 +358,15 @@ footer a:hover {
 }
 
 @media (max-width: 400px) {
-  .main-nav {
-    flex-direction: column;
-    gap: 10px;
-    position: static;
-    transform: none;
-  }
   .top-header {
-    padding: 10px 5px;
+    padding: 5px 2px;
   }
-  .user-section {
-    gap: 8px;
-    padding-right: 5px;
+  .main-nav a {
+    font-size: 14px;
+    padding: 6px 0;
   }
   .logout-btn {
-    padding: 6px 12px;
+    padding: 4px 8px;
     font-size: 12px;
-    margin-right: 3px;
   }
 }
