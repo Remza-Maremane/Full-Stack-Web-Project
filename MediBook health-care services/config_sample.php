@@ -7,8 +7,16 @@ define('DB_USER', 'root');//database user is "root" by default unless you change
 define('DB_PASS', 'PASSWORD');//replace "PASSWORD" with your database password
 define('DB_NAME', 'DATABASE');//replace "DATABASE" with the name of your database
 
-$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+//enables exceptions
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+try {
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    // Optionally set charset
+    // $conn->set_charset('utf8mb4');
+} catch (mysqli_sql_exception $e) {
+    // Optionally log the error
+    // error_log('Database connection failed: ' . $e->getMessage());
+    echo '<div style="color: red; font-weight: bold; text-align: center; margin-top: 40px;">Sorry, we are experiencing technical difficulties. Please try again later.</div>';
+    exit();
 }
